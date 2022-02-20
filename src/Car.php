@@ -1,21 +1,13 @@
 <?php
-class Car {
+
+class Car extends CarRepository
+{
     public $color;
+    public $brand;
 
-    public static function init() {
-        return new Car();
-    }
-
-    public function findById() 
+    function __construct()
     {
-        return new Car();
-    }
-
-    public function get() 
-    {
-        $Car = new Car();
-        $Car->color = 'red';
-        
-        return $Car;
+        $this->table = 'car';
+        $this->schema = new CarSchema();
     }
 }
