@@ -13,4 +13,14 @@ class Query
             $id
         );
     }
+
+    public function all()
+    {
+        $this->sql .= "SELECT * FROM";
+    }
+
+    public function final()
+    {
+        return $this->sql;
+    }
 }

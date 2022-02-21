@@ -1,13 +1,19 @@
 <?php
 
-class Repository extends Query
+class Repository
 {
     protected $table;
     protected $schema;
+    protected $query;
+
+    public function setQuery(Query $Query)
+    {
+        $this->Query = $Query;
+    }
 
     public function findById(int $id)
     {
-        $this->select([], $this->table, $id);
+        $this->Query->select([], $this->table, $id);
 
         return $this;
     }
@@ -16,5 +22,10 @@ class Repository extends Query
     {
         $this->schema->map($this);
         return $this;
+    }
+
+    public function all()
+    {
+        $this->Query->all();
     }
 }

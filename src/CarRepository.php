@@ -2,8 +2,11 @@
 
 class CarRepository extends Repository
 {
-    public static function init()
+    public static function init($Query)
     {
-        return new Car();
+        $Car = new Car();
+        $Car->setQuery($Query);
+
+        return $Car;
     }
 }
