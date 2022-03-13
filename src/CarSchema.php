@@ -1,21 +1,14 @@
 <?php
 
-class CarSchema
+class CarSchema extends Mapper
 {
-    public static function getData(): array
+    public $table = 'car';
+
+    public function getData(): array
     {
         return [
             'color' => ['column' => 'color'],
             'brand' => ['column' => 'brand']
         ];
-    }
-
-    public function map(Repository $Model, array $data)
-    {
-        foreach ($this->getData() as $field => $schema) {
-            $column = $schema['column'] ?? '';
-            $Model->$field = $data[$column] ?? '';
-            $array[$field] = $schema;
-        }
     }
 }

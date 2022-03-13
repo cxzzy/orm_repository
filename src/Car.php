@@ -7,7 +7,6 @@ class Car extends CarRepository
 
     function __construct()
     {
-        $this->table = 'car';
         $this->schema = new CarSchema();
     }
 }

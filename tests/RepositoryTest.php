@@ -29,10 +29,20 @@ class RepositoryTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($result, 'SELECT * FROM');
     }
 
-    public function testWhereQuery()
+    public function testMultipleResults()
     {
-        $Query = new Query();
-        $Car = Car::init($Query)
+        $mockedData = [
+            [
+                'color' => 'red'
+            ],
+            [
+                'color' => 'red'
+            ],
+        ];
+
+        $mock = $this->createMock(Query::class);
+        $mock->method('run')->willReturn($mockedData);
+        $Car = Car::init($mock)
             ->select()
             ->get();
 
@@ -49,5 +59,45 @@ class RepositoryTest extends \PHPUnit\Framework\TestCase
         $result = $Query->final();
 
         $this->assertSame($result, 'SELECT * FROM car WHERE id = 2');
+    }
+
+    public function testDeleteQueryBuilder()
+    {
+        $Query = new Query();
+        $Car = Car::init($Query)
+            ->delete()
+            ->where(['color' => 'red'])
+            ->get();
+
+        $result = $Query->final();
+
+        $this->assertSame($result, 'DELETE FROM car WHERE color = red');
+    }
+
+    public function testWhereQueryBuilder()
+    {
+        $Query = new Query();
+        $Car = Car::init($Query)
+            ->select()
+            ->where(['color' => 'red'])
+            ->get();
+
+        $result = $Query->final();
+
+        $this->assertSame($result, 'SELECT * FROM car WHERE color = red');
+    }
+
+    public function testLimitQueryBuilder()
+    {
+        $Query = new Query();
+        $Car = Car::init($Query)
+            ->select()
+            ->where(['color' => 'red'])
+            ->limit([1,2])
+            ->get();
+
+        $result = $Query->final();
+
+        $this->assertSame($result, 'SELECT * FROM car WHERE color = red LIMIT 2,1');
     }
 }
